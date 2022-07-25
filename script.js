@@ -9,9 +9,9 @@ function getLocation() {
 }
 
 function showPosition(position) {
-    x.innerHTML =
-        "Latitude: " +
-        position.coords.latitude +
-        "<br>Longitude: " +
-        position.coords.longitude;
+    if (position.coords.latitude < 44.266956 && position.coords.latitude > 44.266936) {
+        alert("You are at home!")
+    } else {
+        alert("You are not at home!")
+    }
 }
