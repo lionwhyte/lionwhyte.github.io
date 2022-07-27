@@ -17,7 +17,9 @@ send_to_storage.onclick = () => {
     alert("Location reminder " + "'" + location_name.value + "'" + " saved.")
 }
 
-get_location.onclick = () => {
+get_location.onclick = (e) => {
+    e.preventDefault();
+    console.log("x")
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
             latitude.value = position.coords.latitude;
