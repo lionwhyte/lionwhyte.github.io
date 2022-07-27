@@ -19,7 +19,6 @@ send_to_storage.onclick = () => {
 
 get_location.onclick = (e) => {
     e.preventDefault();
-    console.log("x")
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
             latitude.value = position.coords.latitude;
