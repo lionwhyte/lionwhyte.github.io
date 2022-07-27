@@ -39,6 +39,7 @@ run_app.onclick = () => {
         return;
     };
     app_status.innerHTML = "Checking location.."
+    storage.innerHTML = Object.keys(localStorage)
     myInterval = setInterval(() => {
         for (key in Object.keys(localStorage)) {
             let storage_items = Object.keys(localStorage),
