@@ -4,14 +4,25 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Location App</title>
+        <title>Location Reminder App</title>
     </head>
     <body>
         <h2>JavaScript Geolocation API</h2>
-        <p>Click the button to get your coordinates.</p>
-
-        <button onclick="getLocation()">Try It</button>
-
+        <form id="location_reminder_form">
+            <label for="location_name">Location name: </label>
+            <input type="text" id="location_name" name="location_name" value=""><br><br>
+            <label for="reminder_description">Reminder description: </label>
+            <input type="text" id="reminder_description" name="reminder_description" value=""><br><br>
+            <label for="latitude">Latitude: </label>
+            <input type="number" id="latitude" name="latitude" value=""><br><br>
+            <label for="longitude">Longitude: </label>
+            <input type="number" id="longitude" name="longitude" value=""> <button id="get_location">Get Location</button><br><br>    
+            <input id="send_to_storage" type="submit" value="Submit data"></input>
+        </form><br>
+        
+        <button id="run_app">Run App</button>
+        <button id="stop_app">Stop</button>
+        <h3 id="app_status"></h3>
 
         <script src="script.js"></script>
     </body>
