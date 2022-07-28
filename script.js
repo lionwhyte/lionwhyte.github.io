@@ -12,6 +12,7 @@ send_to_storage.onclick = () => {
         reminder: reminder_description.value,
         latitude: latitude.value,
         longitude: longitude.value,
+        location: location_name.value
     };
     localStorage.setItem(location_name.value, JSON.stringify(reminder_object));
     alert("Location reminder " + "'" + location_name.value + "'" + " saved.")
@@ -39,7 +40,7 @@ run_app.onclick = () => {
         return;
     };
     app_status.innerHTML = "Checking location.."
-    storage.innerHTML = Object.keys(localStorage)
+
     myInterval = setInterval(() => {
         for (key in Object.keys(localStorage)) {
             let storage_items = Object.keys(localStorage),
@@ -49,9 +50,9 @@ run_app.onclick = () => {
                 let lat = position.coords.latitude,
                     long = position.coords.longitude,
                     variation = 0.000010;
-
+                storage.innerHTML += item.location + ", " + item.latitude + ", " + item.longitude + " <=> " + lat + ", " + long + "<br>"
                 if ((lat + variation > item.latitude && lat - variation < item.latitude && long + variation > item.longitude && long - variation < item.longitude)) {
-                    alert("You are at " + "'" + storage_items[key] + "'.\n\nReminder: " + item.reminder)
+                    alert("You are at " + "'" + item.location + "'.\n\nReminder: " + item.reminder)
                     clearInterval(myInterval);
                     myInterval = undefined;
                     app_status.innerHTML = ""
