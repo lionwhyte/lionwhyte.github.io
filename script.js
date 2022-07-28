@@ -49,7 +49,7 @@ run_app.onclick = () => {
             navigator.geolocation.getCurrentPosition((position) => {
                 let lat = position.coords.latitude,
                     long = position.coords.longitude,
-                    variation = 0.000010;
+                    variation = 0.0010000;
                 storage.innerHTML += item.location + ", " + item.latitude + ", " + item.longitude + " <=> " + lat + ", " + long + "<br>"
                 if ((lat + variation > item.latitude && lat - variation < item.latitude && long + variation > item.longitude && long - variation < item.longitude)) {
                     alert("You are at " + "'" + item.location + "'.\n\nReminder: " + item.reminder)
