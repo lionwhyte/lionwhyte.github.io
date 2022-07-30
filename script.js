@@ -52,7 +52,7 @@ run_app.onclick = () => {
                     variation = 0.0010000;
                 storage.innerHTML += item.location + ", " + item.latitude + ", " + item.longitude + " <=> " + lat + ", " + long + "<br>"
                 if ((lat + variation > item.latitude && lat - variation < item.latitude && long + variation > item.longitude && long - variation < item.longitude)) {
-                    alert("You are at " + "'" + item.location + "'.\n\nReminder: " + item.reminder)
+                    notifyMe(item.location, item.reminder)
                     clearInterval(myInterval);
                     myInterval = undefined;
                     app_status.innerHTML = ""
@@ -70,14 +70,12 @@ stop_app.onclick = () => {
     };
 };
 
-function notifyMe() {
-
-
+function notifyMe(location, reminder) {
     navigator.serviceWorker.register('sw.js');
     Notification.requestPermission(function (result) {
         if (result === 'granted') {
             navigator.serviceWorker.ready.then(function (registration) {
-                registration.showNotification('Notification with ServiceWorker');
+                registration.showNotification("You are at " + "'" + location + "'.\n\nReminder: " + reminder);
             });
         }
     });
