@@ -50,7 +50,7 @@ run_app.onclick = () => {
                 let lat = position.coords.latitude,
                     long = position.coords.longitude,
                     variation = 0.0010000;
-                storage.innerHTML += item.location + ", " + item.latitude + ", " + item.longitude + " <=> " + lat + ", " + long + "<br>"
+                // storage.innerHTML += item.location + ", " + item.latitude + ", " + item.longitude + " <=> " + lat + ", " + long + "<br>"
                 if ((lat + variation > item.latitude && lat - variation < item.latitude && long + variation > item.longitude && long - variation < item.longitude)) {
                     notifyMe(item.location, item.reminder)
                     clearInterval(myInterval);
@@ -76,6 +76,7 @@ function notifyMe(location, reminder) {
         if (result === 'granted') {
             navigator.serviceWorker.ready.then(function (registration) {
                 registration.showNotification("Location: " + "'" + location + "'. Reminder: " + reminder);
+                alert("Location: " + "'" + location + "'. Reminder: " + reminder)
             });
         }
     });
