@@ -75,7 +75,7 @@ function notifyMe(location, reminder) {
     Notification.requestPermission(function (result) {
         if (result === 'granted') {
             navigator.serviceWorker.ready.then(function (registration) {
-                registration.showNotification("You are at " + "'" + location + "'.\n\nReminder: " + reminder);
+                registration.showNotification("Location: " + "'" + location + "'. Reminder: " + reminder);
             });
         }
     });
