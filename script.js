@@ -111,8 +111,8 @@ map.on('click', function (evt) {
     map.getLayers().R.splice(1, 1)
     console.log(ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
     if (confirm("Add location?") == true) {
-        latitude.value = lat + 1.536119;
-        longitude.value = long + 0.745095;
+        latitude.value = lat;
+        longitude.value = long;
     } else {
         return;
     }
