@@ -50,7 +50,6 @@ run_app.onclick = () => {
                 let lat = position.coords.latitude,
                     long = position.coords.longitude,
                     variation = 0.0010000;
-                // storage.innerHTML += item.location + ", " + item.latitude + ", " + item.longitude + " <=> " + lat + ", " + long + "<br>"
                 if ((lat + variation > item.latitude && lat - variation < item.latitude && long + variation > item.longitude && long - variation < item.longitude)) {
                     notifyMe(item.location, item.reminder)
                     clearInterval(myInterval);
@@ -81,4 +80,42 @@ function notifyMe(location, reminder) {
         }
     });
 }
+
+
+const map = new ol.Map({
+    target: 'map',
+    layers: [
+        new ol.layer.Tile({
+            source: new ol.source.OSM()
+        })
+    ],
+    view: new ol.View({
+        center: ol.proj.fromLonLat([15.24, 44.11]),
+        zoom: 12
+    })
+});
+
+map.on('click', function (evt) {
+    const lat = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326')[1],
+        long = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326')[0];
+    const layer = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            features: [
+                new ol.Feature({
+                    geometry: new ol.geom.Point(ol.proj.fromLonLat([long, lat]))
+                })
+            ]
+        })
+    });
+
+    map.getLayers().R.splice(1, 1)
+    console.log(ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
+    if (confirm("Add location?") == true) {
+        latitude.value = lat + 1.536119;
+        longitude.value = long + 0.745095;
+    } else {
+        return;
+    }
+    map.addLayer(layer);
+});
 
