@@ -52,8 +52,8 @@ run_app.onclick = () => {
                     long = position.coords.longitude,
                     variation = 0.0010000;
                 if ((lat + variation > item.latitude && lat - variation < item.latitude && long + variation > item.longitude && long - variation < item.longitude)) {
-                    notifyMe(item.location, item.reminder)
                     clearInterval(myInterval);
+                    notifyMe(item.location, item.reminder)
                     myInterval = undefined;
                     app_status.innerHTML = ""
                 };
