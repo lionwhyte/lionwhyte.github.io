@@ -3,7 +3,8 @@ const location_name = document.getElementById("location_name"),
     latitude = document.getElementById("latitude"),
     longitude = document.getElementById("longitude");
 
-send_to_storage.onclick = () => {
+send_to_storage.onclick = (e) => {
+    e.preventDefault();
     if (location_name.value === "" || reminder_description.value === "" || latitude === "" || longitude === "") {
         alert("Please fill all the input fields!");
         return;
@@ -69,9 +70,9 @@ stop_app.onclick = () => {
     };
 };
 
+navigator.serviceWorker.register('sw.js');
 
 function notifyMe(location, reminder) {
-    navigator.serviceWorker.register('sw.js');
     Notification.requestPermission(function (result) {
         if (result === 'granted') {
             navigator.serviceWorker.ready.then(function (registration) {

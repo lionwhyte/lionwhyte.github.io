@@ -1,68 +1,24 @@
-var cacheName = 'my-cache-v1';
-var cacheAssets = [
+var cacheName = 'hello-pwa';
+var filesToCache = [
     '/',
-    'index.html',
-    'script.js',
+    '/index.html',
+    '/script.js'
 ];
 
-// Call install Event
-self.addEventListener('install', e => {
-    // Wait until promise is finished 
+/* Start the service worker and cache all of the app's content */
+self.addEventListener('install', function (e) {
     e.waitUntil(
-        caches.open(cacheName)
-            .then(cache => {
-                console.log(`Service Worker: Caching Files: ${cache}`);
-                cache.addAll(cacheAssets)
-                    // When everything is set
-                    .then(() => self.skipWaiting())
-            })
-    );
-})
-
-
-// Call Activate Event
-self.addEventListener('activate', e => {
-    console.log('Service Worker: Activated');
-    // Clean up old caches by looping through all of the
-    // caches and deleting any old caches or caches that
-    // are not defined in the list
-    e.waitUntil(
-        caches.keys().then(cacheNames => {
-            return Promise.all(
-                cacheNames.map(
-                    cache => {
-                        if (cache !== cacheName) {
-                            console.log('Service Worker: Clearing Old Cache');
-                            return caches.delete(cache);
-                        }
-                    }
-                )
-            )
+        caches.open(cacheName).then(function (cache) {
+            return cache.addAll(filesToCache);
         })
     );
-})
+});
 
-// Call Fetch Event 
-self.addEventListener('fetch', e => {
-    console.log('Service Worker: Fetching');
+/* Serve cached content when offline */
+self.addEventListener('fetch', function (e) {
     e.respondWith(
-        fetch(e.request)
-            .then(res => {
-                // The response is a stream and in order the browser 
-                // to consume the response and in the same time the 
-                // cache consuming the response it needs to be 
-                // cloned in order to have two streams.
-                const resClone = res.clone();
-                // Open cache
-                caches.open(cacheName)
-                    .then(cache => {
-                        // Add response to cache
-                        cache.put(e.request, resClone);
-                    });
-                return res;
-            }).catch(
-                err => caches.match(e.request)
-                    .then(res => res)
-            )
+        caches.match(e.request).then(function (response) {
+            return response || fetch(e.request);
+        })
     );
 });
